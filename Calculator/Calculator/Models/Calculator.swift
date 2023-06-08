@@ -31,32 +31,30 @@ struct Calculator {
         }
     }
     
-    
     private var expression: ArithmeticExpression?       // 계산식
-    
     private var result: Decimal?        // 결과값
+    
+    private var pressedClear: Bool = false          // C가 눌렸는지 유무
+    private var carryingNegative: Bool = false      // 마이너스 사인 유무
+    private var carryingDecimal: Bool = false       // 마지막에 . 달려있는지 유무
+    private var carryingZeroCount: Int = 0          // 0 개수 체크
+    
     
     var displayText: String {       // String으로 변환된 숫자를 콤마 넣어서 출력
         return getNumberString(forNumber: number, withCommas: true)
     }
     
-    private var number: Decimal? {      // 현재 표시중인 숫자
+    var number: Decimal? {      // 현재 표시중인 숫자
         if pressedClear || carryingDecimal {
             return newNumber
-        } else {
-            return newNumber ?? expression?.number ?? result
         }
+        return newNumber ?? expression?.number ?? result
     }
     
     // ViewModel에서 AC보여줄지 C보여줄지 알려줌
     var showAllClear: Bool {
         newNumber == nil && expression == nil && result == nil || pressedClear
     }
-    
-    private var pressedClear: Bool = false          // C가 눌렸는지 유무
-    private var carryingNegative: Bool = false      // 마이너스 사인 유무
-    private var carryingDecimal: Bool = false       // 마지막에 . 달려있는지 유무
-    private var carryingZeroCount: Int = 0          // 0 개수 체크
     
     private var containsDecimal: Bool {      // 현재 표시중인 숫자의 String에 .이 있는지
         return getNumberString(forNumber: number).contains(".")
@@ -65,7 +63,7 @@ struct Calculator {
     // newNumber를 String으로 바꿔서 새로운 숫자를 넣고 다시 변환
     mutating func setDigit(_ digit: Digit) {
         // .이 들어있고 입력값이 0이면 0 개수 늘림
-        if containsDecimal	 && digit == .zero {
+        if containsDecimal && digit == .zero {
             carryingZeroCount += 1
         } else if canAddDigit(digit) {
             let numberString = getNumberString(forNumber: newNumber)
