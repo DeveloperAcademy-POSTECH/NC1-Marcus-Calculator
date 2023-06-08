@@ -6,7 +6,7 @@ enum ButtonType: Hashable, CustomStringConvertible {
     case operation(_ operation: Operation)
     case clear
     case allClear
-    case negative
+    case toggle
     case percent
     case equal
     case decimal
@@ -21,7 +21,7 @@ enum ButtonType: Hashable, CustomStringConvertible {
             return "C"
         case .allClear:
             return "AC"
-        case .negative:
+        case .toggle:
             return "⁺⁄₋"
         case .percent:
             return "%"
@@ -36,7 +36,7 @@ enum ButtonType: Hashable, CustomStringConvertible {
         switch self {
         case .digit, .operation, .decimal, .equal:
             return .white
-        case .clear, .allClear, .negative, .percent:
+        case .clear, .allClear, .toggle, .percent:
             return .black
         }
     }

@@ -25,12 +25,10 @@ struct CalculatorButtonStyle: ButtonStyle {
             }
             .clipShape(Capsule())
     }
-    
-    
 }
 
 struct CalculatorButtonStyle_Previews: PreviewProvider {
-    static let buttonType: ButtonType = .negative
+    static let buttonType: ButtonType = .toggle
     
     static var previews: some View {
         Button(buttonType.description) { }
